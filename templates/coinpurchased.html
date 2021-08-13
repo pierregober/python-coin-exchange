@@ -70,6 +70,7 @@
       .spiceupinput {
         border-radius: 3pt;
       }
+      
     </style>
   </head>
   <body>
@@ -81,9 +82,10 @@
       id="companyPicture"
     />
    <div>
-      {% for host in coins %}
-         <h5><span>{{ host.name }}   {{ host.price }}  {{ host.qty }}</span></h5>
+      {% for data in coins %}
+         <h5><span>{{ data.coinname }}   {{ data.price }}  {{ data.qty }}</span></h5>
          {% endfor %}
+
       <br>
       <button
       class="btn btn-success btnstyler"
@@ -100,12 +102,17 @@
       value="Login"
       id="button-addon2"
       onclick="location.href = '/logout'">
-         </b>Click here to log out</b>
+         </b>Log out</b>
       </button>
    </div>
+    <marquee behavior="scroll" direction="left">
+          <p> {{ topcoin[0] }} </p>
+    </marquee>
   </body>
   <script typt="text/javascript">
-
+      // (function () {
+      //   console.log(host)
+      // })();
   </script>
 </html>
 

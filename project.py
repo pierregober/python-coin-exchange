@@ -17,27 +17,29 @@ app.secret_key = "superrandom key that nonone knows about"
 
 coins = []
 
+topcoin = []
 
+# coinmarketcap API
 # This will be used to grab the lastest price on load
+
+
 def getTop():
-    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map'
     parameters = {
         'start': '1',
-        'limit': '10',
-        'convert': 'USD'
+        'limit': '300',
     }
     headers = {
         'Accepts': 'application/json',
         'X-CMC_PRO_API_KEY': '8d15a1f1-acc7-4cbd-b4f7-914159627381',
     }
-
     session = Session()
     session.headers.update(headers)
-
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
-        print(data)
+        topcoin = (data['data'])
+        print(topcoin)
     except (ConnectionError, Timeout, TooManyRedirects) as e:
         print(e)
 
@@ -63,8 +65,8 @@ def hosts():
             price = request.form.get("price")
             qty = request.form.get("qty")
             # create a new dictionary with values, add to coins
-            coins.append({"name": name, "price": price, "qty": qty})
-    return render_template("coinpurchased.html.j2", coins=coins)
+            coins.append({"coinname": name, "price": price, "qty": qty})
+    return render_template("coinpurchased.html.j2", coins=coins, topcoin=topcoin)
 
 
 @app.route("/form", methods=["GET", "POST"])
