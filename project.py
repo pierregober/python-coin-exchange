@@ -9,6 +9,7 @@ from flask import render_template
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
+# import win32api
 
 app = Flask(__name__)
 
@@ -19,6 +20,7 @@ coins = []
 
 topcoin = []
 
+pricecollector = []
 # coinmarketcap API
 # This will be used to grab the lastest price on load
 
@@ -38,13 +40,17 @@ def getTop():
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
-        topcoin = (data['data'])
+        topcoin = data['data']
         print(topcoin)
     except (ConnectionError, Timeout, TooManyRedirects) as e:
         print(e)
 
 
-getTop()
+# def getTotal():
+#     for c in coins:
+#         collector = collector + (c['qty'] * c['price'])
+#     if collector > 100000:
+#         win32api.MessageBox(0, 'hello', 'title')
 
 
 @app.route("/logout")
@@ -56,6 +62,8 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def hosts():
+    getTop()
+    # getTotal()   #TO DO look into win32 promts
     # GET returns the rendered hosts
     # POST adds new hosts, then returns rendered hosts
     if "username" in session and session["username"] == "admin":
