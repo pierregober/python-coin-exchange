@@ -55,7 +55,7 @@ def getTop():
 
 @app.route("/logout")
 def logout():
-    # accessing this page pops the value of username of the session
+    # pop the username off of the session
     session.pop("username", None)
     return redirect("/")
 
@@ -64,22 +64,22 @@ def logout():
 def hosts():
     getTop()
     # getTotal()   #TO DO look into win32 promts
-    # GET returns the rendered hosts
-    # POST adds new hosts, then returns rendered hosts
+    # GET call returns the 'cart'
+    # POST call adds new purchased coins, then returns rendered 'cart'
     if "username" in session and session["username"] == "admin":
         if request.method == "POST":
             # pull all values from posted form
             name = request.form.get("coinname")
             price = request.form.get("price")
             qty = request.form.get("qty")
-            # create a new dictionary with values, add to coins
+            # create a new dictionary with values, add to coins dict
             coins.append({"coinname": name, "price": price, "qty": qty})
     return render_template("coinpurchased.html.j2", coins=coins, topcoin=topcoin)
 
 
 @app.route("/form", methods=["GET", "POST"])
 def login():
-    # HTML form that collects hostname, ip, and fqdn values
+    # html form that collects values
     if request.method == "POST":
         session["username"] = request.form.get("username")
     if "username" in session and session["username"] == "admin":
