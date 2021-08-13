@@ -17,6 +17,11 @@
       integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
     <meta charset="UTF-8" />
     <style>
       body {
@@ -28,6 +33,7 @@
       form {
         display: flex;
         margin: 1rem;
+        flex-direction: column;
       }
 
       .form {
@@ -46,7 +52,7 @@
       .viewData {
         border-radius: 4pt;
         background: #80808087;
-        width: 200pt;
+        width: 300pt;
         margin-left: 0.5rem;
         display: flex;
         flex-direction: column;
@@ -56,6 +62,16 @@
         width: 500px;
         border-radius: 10pt;
         margin: auto;
+      }
+
+      .sumbitstyler {
+        margin-top: 5pt;
+      }
+
+      .inputMagic {
+        text-align: center;
+        background-color: transparent;
+        border: none;
       }
     </style>
   </head>
@@ -68,7 +84,7 @@
       id="companyPicture"
     />
 
-    <form action="/login" method="POST">
+    <form action="/" method="POST">
       <div class="formViewiewContainer">
         <div class="form">
           <label for="coin">Symbol of coin:</label>
@@ -103,15 +119,23 @@
           </div>
         </div>
         <div id="coinContainer" class="viewData">
-          <div id="coinName" name="coinname"></div>
-          <div id="coinPrice" name="price"></div>
-          <div id="howMuch" name="qty"></div>
+          <input class="inputMagic" id="coinName" name="coinname" value="" />
+          <input class="inputMagic" id="coinPrice" name="price" value="" />
+          <input class="inputMagic" id="howMuch" name="qty" value="" />
         </div>
       </div>
+      <div>
+        <button
+          type="submit"
+          class="btn btn-secondary sumbitstyler"
+          type="button"
+          id="button-addon2"
+          onclick="location.href = ''"
+        >
+          Submit to the dashboard
+        </button>
+      </div>
     </form>
-    <button class="btn btn-secondary" type="button" id="button-addon2">
-      Submit to the dashboard
-    </button>
   </body>
   <script typt="text/javascript">
     // it's dupe I get it
@@ -140,8 +164,8 @@
       )
         .then((resp) => resp.json())
         .then((data) => {
-          $coinName.innerText = data.data[0].name;
-          $coinPrice.innerText = data.data[0].price + " (USD)";
+          $coinName.value = data.data[0].name;
+          $coinPrice.value = data.data[0].price + " (USD)";
           price = data.data[0].price;
         });
     }
@@ -152,7 +176,7 @@
         if (toggleBtn) {
           //Fill element to show our value
           var calcQ = e.target.value / price;
-          $howMuchCoin.innerText =
+          $howMuchCoin.value =
             "You can purchase " + calcQ + " " + $coinName.innerText;
         } else {
           alert("Please select a crypto first please. Thank you.");
@@ -164,5 +188,9 @@
     };
     var $inputUSD = document.getElementById("cash");
     $inputUSD.addEventListener("input", calcCoin);
+
+    const getValueName = () => {
+      return $coinName.innerText;
+    };
   </script>
 </html>

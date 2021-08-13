@@ -80,35 +80,25 @@
       alt="Avatar"
       id="companyPicture"
     />
-   <div>
-      {% for host in coins %}
-         <h5><span>{{ host.name }}   {{ host.price }}  {{ host.qty }}</span></h5>
-         {% endfor %}
-      <br>
+
+    <form class="form-group formstyler" action="" method="POST">
+      <p>Please Login</p>
+      <input
+        class="spiceupinput"
+        type="text"
+        name="username"
+        placeholder="Jeff Bezos"
+      />
+
       <button
-      class="btn btn-success btnstyler"
-      type="submit"
-      value="Login"
-      id="button-addon2"
-      onclick="location.href = '/form'"
+        class="btn btn-primary btnstyler"
+        type="submit"
+        value="Login"
+        id="button-addon2"
       >
-         <b>Click here to add more coins</b>
+        Let's Go
       </button>
-      <button
-      class="btn btn-warning btnstyler"
-      type="submit"
-      value="Login"
-      id="button-addon2"
-      onclick="location.href = '/logout'">
-         </b>Click here to log out</b>
-      </button>
-   </div>
+    </form>
   </body>
-  <script typt="text/javascript">
-
-  </script>
+  <script typt="text/javascript"></script>
 </html>
-
-
-
-
