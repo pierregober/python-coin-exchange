@@ -18,8 +18,6 @@ app.secret_key = "superrandom key that nonone knows about"
 
 coins = []
 
-topcoin = []
-
 pricecollector = []
 # coinmarketcap API
 # This will be used to grab the lastest price on load
@@ -40,8 +38,29 @@ def getTop():
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
-        topcoin = data['data']
-        print(topcoin)
+        return data['data']
+    except (ConnectionError, Timeout, TooManyRedirects) as e:
+        print(e)
+
+
+def getDogeStory():
+    url = 'https://api.lunarcrush.com/v2?'
+    parameters = {
+        'data': 'feeds',
+        'key': 'nj74pb5ijzpw1l3y01zb28',
+        'symbol': 'DOGE',
+        'limit': 10,
+        'sources': 'twitter'
+    }
+    headers = {
+        'Accepts': 'application/json',
+    }
+    session = Session()
+    session.headers.update(headers)
+    try:
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+        return data['data']
     except (ConnectionError, Timeout, TooManyRedirects) as e:
         print(e)
 
@@ -62,7 +81,9 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def hosts():
-    getTop()
+    topcoin = getTop()
+    story = getDogeStory()
+    print(story)
     # getTotal()   #TO DO look into win32 promts
     # GET call returns the 'cart'
     # POST call adds new purchased coins, then returns rendered 'cart'
@@ -74,18 +95,20 @@ def hosts():
             qty = request.form.get("qty")
             # create a new dictionary with values, add to coins dict
             coins.append({"coinname": name, "price": price, "qty": qty})
-    return render_template("coinpurchased.html.j2", coins=coins, topcoin=topcoin)
+    return render_template("coinpurchased.html.j2", coins=coins, topcoin=topcoin, story=story)
 
 
 @app.route("/form", methods=["GET", "POST"])
 def login():
+    topcoin = getTop()
+    story = getDogeStory()
     # html form that collects values
     if request.method == "POST":
         session["username"] = request.form.get("username")
     if "username" in session and session["username"] == "admin":
-        return render_template("coinrequestform.html.j2")
+        return render_template("coinrequestform.html.j2", topcoin=topcoin)
     else:
-        return render_template("loginform.html.j2")
+        return render_template("loginform.html.j2", story=story)
 
 
 if __name__ == "__main__":

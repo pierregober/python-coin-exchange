@@ -70,6 +70,11 @@
       .spiceupinput {
         border-radius: 3pt;
       }
+      
+      .marqueeContents {
+        display: flex;
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -99,6 +104,15 @@
         Let's Go
       </button>
     </form>
+    <div>DOGECOIN STORIES -- TWITTER</div>
+    <marquee class="informationscroll" behavior="scroll" direction="right">
+      <div class="marqueeContents">
+        <div>
+      {% for doge in story %}
+         <p>{{ doge.body }}, by {{ doge.display_name }}</p>
+      {% endfor %}
+      </div>
+    </marquee>
   </body>
   <script typt="text/javascript"></script>
 </html>

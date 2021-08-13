@@ -73,6 +73,11 @@
         background-color: transparent;
         border: none;
       }
+
+      .marqueeContents {
+        display: flex;
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -136,6 +141,13 @@
         </button>
       </div>
     </form>
+    <marquee class="informationscroll" behavior="scroll" direction="left">
+      <div class="marqueeContents">
+        {% for stat in topcoin %}
+        <p>--{{ stat.rank }}: {{ stat.symbol }}, {{ stat.name }}</p>
+        {% endfor %}
+      </div>
+    </marquee>
   </body>
   <script typt="text/javascript">
     // it's dupe I get it
