@@ -104,12 +104,11 @@
         Let's Go
       </button>
     </form>
-    <div>DOGECOIN STORIES -- TWITTER</div>
-    <marquee class="informationscroll" behavior="scroll" direction="right">
+    <marquee class="informationscroll" behavior="scroll" direction="left">
       <div class="marqueeContents">
         <div>
       {% for doge in story %}
-         <p>{{ doge.body }}, by {{ doge.display_name }}</p>
+         <a target="_blank" href={{doge.url}}>{{ doge.body }} by {{ doge.display_name }} ----- </a>
       {% endfor %}
       </div>
     </marquee>
